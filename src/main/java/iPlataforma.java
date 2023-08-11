@@ -7,4 +7,5 @@ public interface iPlataforma {
     void eliminarSerie(Serie serie);
     void eliminarPaquete(Paquete paquete);
     void alquilar(Produccion produccion);
+    void alquilarPaquete(Paquete paquete);
 }

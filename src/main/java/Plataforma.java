@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Plataforma implements iPlataforma{
@@ -19,7 +20,7 @@ public class Plataforma implements iPlataforma{
 
     @Override
     public String informe() {
-        
+
         String msgPeliculas = "";
         String msgSeries = "";
         String msgPaquetes = "";
@@ -34,13 +35,14 @@ public class Plataforma implements iPlataforma{
             msgPaquetes += paquete.getInfo();
         }
         
-        String msg = "Catalogo: /n" +
-                "Películas: /n" + msgPeliculas +
-                "/n" +
-                "Series /n" + msgSeries +
-                "/n" +
-                "Paquetes /n" + msgPaquetes +
-                "";
+        String msg = "" +
+                " " +
+                "Catalogo: \n" +
+                " Películas: \n" + msgPeliculas +
+                "\n" +
+                " Series \n" + msgSeries +
+                " \n" +
+                " Paquetes \n" + msgPaquetes;
         return msg;
     }
 
@@ -68,15 +70,23 @@ public class Plataforma implements iPlataforma{
 
     @Override
     public void eliminarSerie(Serie serie) {
-        for(Serie serie1: series){
-            peliculas.remove(serie1);
+        Iterator<Serie> iterator = series.iterator();
+        while (iterator.hasNext()) {
+            Serie series = iterator.next();
+            if(series == serie){
+                iterator.remove();
+            }
         }
     }
 
     @Override
     public void eliminarPaquete(Paquete paquete) {
-        for(Paquete paquete1: paquetes){
-            peliculas.remove(paquete1);
+        Iterator<Paquete> iterator = paquetes.iterator();
+        while (iterator.hasNext()) {
+            Paquete paquetes = iterator.next();
+            if(paquetes == paquete){
+                iterator.remove();
+            }
         }
     }
 
@@ -100,6 +110,17 @@ public class Plataforma implements iPlataforma{
             System.out.println("Oops! No existe: " + produccion.getNombre() + " en nuestro catálogo.");
         }
 
+    }
+
+    public void alquilarPaquete(Paquete paquete){
+        for (Paquete paquete1: paquetes) {
+            if (paquetes.contains(paquete1)) {
+                System.out.println("Alquilaste el paquete: " + paquete1.getNombrePaquete());
+                break;
+            } else {
+                System.out.println("Oops! No existe: " + paquete1.getNombrePaquete() + " en nuestro catálogo.");
+            }
+        }
     }
 
     //GETTERS

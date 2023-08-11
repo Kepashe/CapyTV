@@ -64,7 +64,7 @@ public class Paquete {
         for (Produccion produccion: producciones) {
             valor += produccion.calcularPrecio();
         }
-        double desc = (valor * 100) / descuento;
+        double desc = valor * (descuento/100);
         valor = valor - desc;
         return valor;
     }

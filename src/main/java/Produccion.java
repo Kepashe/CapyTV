@@ -20,7 +20,7 @@ public abstract class Produccion {
     //Métodos
 
     String getInfo(){
-        String inf = "" + nombre + "  $ " + calcularPrecio() + "/n";
+        String inf = "" + nombre + "  $ " + calcularPrecio() + "\n";
         return inf;
     }
 
@@ -70,4 +70,5 @@ public abstract class Produccion {
     public void setPrecioPorHora(double precioPorHora) {
         this.precioPorHora = precioPorHora;
     }
+
 }
