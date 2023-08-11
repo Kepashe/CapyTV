@@ -41,9 +41,9 @@ public class Plataforma implements iPlataforma{
                 "Catalogo: \n" +
                 " Películas: \n" + msgPeliculas +
                 "\n" +
-                " Series \n" + msgSeries +
+                " Series: \n" + msgSeries +
                 " \n" +
-                " Paquetes \n" + msgPaquetes;
+                " Paquetes: \n" + msgPaquetes;
         return msg;
     }
 

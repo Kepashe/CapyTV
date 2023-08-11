@@ -75,6 +75,11 @@ public class Main {
         //Quitar Pelis
         Plataforma.getInstancia().eliminarPelicula(p7);
 
+
+
+        System.out.println(Plataforma.getInstancia().informe());
+
+
         //Alquilar Pelicula existente
         Plataforma.getInstancia().alquilar(p2);
         Plataforma.getInstancia().alquilar(s2);
@@ -83,8 +88,5 @@ public class Main {
         //Alquilar Pelicula inexistente
         Plataforma.getInstancia().alquilar(p1);
         Plataforma.getInstancia().alquilar(s1);
-
-        System.out.println(Plataforma.getInstancia().informe());
-
     }
 }
