@@ -8,6 +8,7 @@ public class Plataforma implements iPlataforma{
     private List<Serie> series = new ArrayList<>();
     private List<Paquete> paquetes = new ArrayList<>();
 
+
     private Plataforma(){}
     public static Plataforma getInstancia(){
         if (instancia == null) {
@@ -63,8 +64,12 @@ public class Plataforma implements iPlataforma{
 
     @Override
     public void eliminarPelicula(Pelicula pelicula) {
-        for(Pelicula pelicula1: peliculas){
-            peliculas.remove(pelicula1);
+        Iterator<Pelicula> iterator = peliculas.iterator();
+        while (iterator.hasNext()) {
+            Pelicula peliculas = iterator.next();
+                    if(peliculas == pelicula){
+                        iterator.remove();
+            }
         }
     }
 

@@ -54,7 +54,7 @@ public class Paquete {
     // Métodos
 
     String getInfo(){
-        String inf = "" + nombrePaquete + "  $ " + precioTotal() + "/n";
+        String inf = "" + nombrePaquete + "  $ " + precioTotal() + "\n";
         return inf;
     }
 

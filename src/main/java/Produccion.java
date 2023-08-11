@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 public abstract class Produccion {
 
     //Atributos
@@ -6,6 +8,7 @@ public abstract class Produccion {
     private String descripción;
     private double duracion;
     private double precioPorHora;
+
 
     //Constructor
 
