@@ -4,7 +4,7 @@ public class Main {
         //Creando Peliculas
         Pelicula p1 = new Pelicula(1, "Pepe Grillo y la aventura de Pinocho", "A sí", 25, 50);
         Pelicula p2 = new Pelicula(2, "La Gringa de los Ravioles", "A sí", 24, 50);
-        Pelicula p3 = new Pelicula(3, "ANOdo de la cancha", "A sí", 12, 10);
+        Pelicula p3 = new Pelicula(3, "Nodo de la cancha", "A sí", 12, 10);
         Pelicula p4 = new Pelicula(4, "No tiene sentido el jg dif", "A sí", 2, 1.6);
         Pelicula p5 = new Pelicula(5, "La historia de una Yumi salvaje", "A sí", 90, 30.5);
         Pelicula p6 = new Pelicula(6, "PARAAA VIEJO", "A sí", 10, 34);
@@ -80,13 +80,13 @@ public class Main {
         System.out.println(Plataforma.getInstancia().informe());
 
 
-        //Alquilar Pelicula existente
+        //Alquilar existente
         Plataforma.getInstancia().alquilar(p2);
         Plataforma.getInstancia().alquilar(s2);
         Plataforma.getInstancia().alquilarPaquete(pa2);
 
-        //Alquilar Pelicula inexistente
-        Plataforma.getInstancia().alquilar(p1);
-        Plataforma.getInstancia().alquilar(s1);
+        //Alquilar inexistente
+        Plataforma.getInstancia().alquilar(p7);
+        Plataforma.getInstancia().alquilar(s7);
     }
 }

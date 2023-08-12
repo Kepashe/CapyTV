@@ -2,15 +2,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Plataforma implements iPlataforma{
+public class Plataforma implements iPlataforma {
     private static Plataforma instancia = new Plataforma();
     private List<Pelicula> peliculas = new ArrayList<>();
     private List<Serie> series = new ArrayList<>();
     private List<Paquete> paquetes = new ArrayList<>();
 
 
-    private Plataforma(){}
-    public static Plataforma getInstancia(){
+    private Plataforma() {
+    }
+
+    public static Plataforma getInstancia() {
         if (instancia == null) {
             instancia = new Plataforma();
         }
@@ -25,17 +27,17 @@ public class Plataforma implements iPlataforma{
         String msgPeliculas = "";
         String msgSeries = "";
         String msgPaquetes = "";
-        
-        for (Pelicula peli: peliculas) {
+
+        for (Pelicula peli : peliculas) {
             msgPeliculas += peli.getInfo();
         }
-        for (Serie serie: series) {
+        for (Serie serie : series) {
             msgSeries += serie.getInfo();
         }
-        for (Paquete paquete: paquetes) {
+        for (Paquete paquete : paquetes) {
             msgPaquetes += paquete.getInfo();
         }
-        
+
         String msg = "" +
                 " " +
                 "Catalogo: \n" +
@@ -67,8 +69,8 @@ public class Plataforma implements iPlataforma{
         Iterator<Pelicula> iterator = peliculas.iterator();
         while (iterator.hasNext()) {
             Pelicula peliculas = iterator.next();
-                    if(peliculas == pelicula){
-                        iterator.remove();
+            if (peliculas == pelicula) {
+                iterator.remove();
             }
         }
     }
@@ -78,7 +80,7 @@ public class Plataforma implements iPlataforma{
         Iterator<Serie> iterator = series.iterator();
         while (iterator.hasNext()) {
             Serie series = iterator.next();
-            if(series == serie){
+            if (series == serie) {
                 iterator.remove();
             }
         }
@@ -89,7 +91,7 @@ public class Plataforma implements iPlataforma{
         Iterator<Paquete> iterator = paquetes.iterator();
         while (iterator.hasNext()) {
             Paquete paquetes = iterator.next();
-            if(paquetes == paquete){
+            if (paquetes == paquete) {
                 iterator.remove();
             }
         }
@@ -97,29 +99,37 @@ public class Plataforma implements iPlataforma{
 
     @Override
     public void alquilar(Produccion produccion) {
+        boolean uwu = false;
         if (produccion instanceof Serie) {
-            for (Produccion produccion2: series) {
-                if (series.contains(produccion2)) {
-                    System.out.println("Alquilaste la serie: " + produccion2.getNombre());
+            for (int i = 0; i < series.size(); i++) {
+                if (series.get(i) == produccion) {
+                    uwu = true;
                     break;
                 }
+            }
+            if (uwu) {
+                System.out.println("Alquilaste la serie: " + produccion.getNombre());
+            } else {
+                System.out.println("Oops! No existe: " + produccion.getNombre() + " en nuestro catálogo.");
             }
         } else if (produccion instanceof Pelicula) {
-            for (Produccion produccion2: peliculas) {
-                if (peliculas.contains(produccion2)) {
-                    System.out.println("Alquilaste la película: " + produccion2.getNombre());
+            for (int i = 0; i < peliculas.size(); i++) {
+                if (peliculas.get(i) == produccion) {
+                    uwu = true;
                     break;
                 }
             }
-        } else {
-            System.out.println("Oops! No existe: " + produccion.getNombre() + " en nuestro catálogo.");
+            if (uwu) {
+                System.out.println("Alquilaste la película: " + produccion.getNombre());
+            } else {
+                System.out.println("Oops! No existe: " + produccion.getNombre() + " en nuestro catálogo.");
+            }
         }
-
     }
 
-    public void alquilarPaquete(Paquete paquete){
-        for (Paquete paquete1: paquetes) {
-            if (paquetes.contains(paquete1)) {
+    public void alquilarPaquete(Paquete paquete) {
+        for (Paquete paquete1 : paquetes) {
+            if (paquete1 == paquete) {
                 System.out.println("Alquilaste el paquete: " + paquete1.getNombrePaquete());
                 break;
             } else {
