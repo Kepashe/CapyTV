@@ -2,7 +2,7 @@ public class Main {
     public static void main(String[] args){
 
         //Creando Peliculas
-        Pelicula p1 = new Pelicula(1, "Pepe Grillo y la aventura de la falopa", "A sí", 25, 50);
+        Pelicula p1 = new Pelicula(1, "Pepe Grillo y la aventura de Pinocho", "A sí", 25, 50);
         Pelicula p2 = new Pelicula(2, "La Gringa de los Ravioles", "A sí", 24, 50);
         Pelicula p3 = new Pelicula(3, "ANOdo de la cancha", "A sí", 12, 10);
         Pelicula p4 = new Pelicula(4, "No tiene sentido el jg dif", "A sí", 2, 1.6);
