@@ -1,3 +1,10 @@
+package model;
+
+import model.Paquete;
+import model.Pelicula;
+import model.Produccion;
+import model.Serie;
+
 public interface iPlataforma {
     String informe();
     void agregarSeries(Serie serie);

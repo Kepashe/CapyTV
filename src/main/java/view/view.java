@@ -1,6 +1,12 @@
-public class Main {
-    public static void main(String[] args){
+package view;
 
+import model.Paquete;
+import model.Pelicula;
+import controller.Plataforma;
+import model.Serie;
+
+public class view {
+    public static void iniciar(){
         //Creando Peliculas
         Pelicula p1 = new Pelicula(1, "Pepe Grillo y la aventura de Pinocho", "A sí", 25, 50);
         Pelicula p2 = new Pelicula(2, "La Gringa de los Ravioles", "A sí", 24, 50);
@@ -89,4 +95,6 @@ public class Main {
         Plataforma.getInstancia().alquilar(p7);
         Plataforma.getInstancia().alquilar(s7);
     }
+
+
 }

@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +55,7 @@ public class Paquete {
 
     // Métodos
 
-    String getInfo(){
+    public String getInfo(){
         String inf = "" + nombrePaquete + "  $ " + precioTotal() + "\n";
         return inf;
     }

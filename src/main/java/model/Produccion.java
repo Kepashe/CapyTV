@@ -1,28 +1,28 @@
-import java.util.Iterator;
+package model;
 
 public abstract class Produccion {
 
     //Atributos
     private int id;
     private String nombre;
-    private String descripción;
+    private String descripcion;
     private double duracion;
     private double precioPorHora;
 
 
     //Constructor
 
-    public Produccion(int id, String nombre, String descripción, double duracion, double precioPorHora) {
+    public Produccion(int id, String nombre, String descripcion, double duracion, double precioPorHora) {
         this.id = id;
         this.nombre = nombre;
-        this.descripción = descripción;
+        this.descripcion = descripcion;
         this.duracion = duracion;
         this.precioPorHora = precioPorHora;
     }
 
     //Métodos
 
-    String getInfo(){
+    public String getInfo(){
         String inf = "" + nombre + "  $ " + calcularPrecio() + "\n";
         return inf;
     }
@@ -50,12 +50,12 @@ public abstract class Produccion {
         this.nombre = nombre;
     }
 
-    public String getDescripción() {
-        return descripción;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescripción(String descripción) {
-        this.descripción = descripción;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public double getDuracion() {
