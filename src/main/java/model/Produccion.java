@@ -20,6 +20,10 @@ public abstract class Produccion {
         this.precioPorHora = precioPorHora;
     }
 
+    public Produccion() {
+
+    }
+
     //Métodos
 
     public String getInfo(){

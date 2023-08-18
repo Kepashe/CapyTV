@@ -4,6 +4,10 @@ import model.Paquete;
 import model.Pelicula;
 import controller.Plataforma;
 import model.Serie;
+import view.jframe.Menu;
+import view.jframe.VentanaPrincipal;
+
+import javax.swing.*;
 
 public class view {
     public static void iniciar(){
@@ -94,7 +98,16 @@ public class view {
         //Alquilar inexistente
         Plataforma.getInstancia().alquilar(p7);
         Plataforma.getInstancia().alquilar(s7);
+
+
     }
 
+    public static void iniciarJframe(){
+        Menu m = new Menu();
+        m.setTitle("MENU PATRONES - USO DEL JAR");
+        m.setSize(573,540);
+        m.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        m.setVisible(true);
+    }
 
 }

@@ -3,6 +3,7 @@ package view;
 
 public class Main {
     public static void main(String[] args) {
-        view.iniciar();
+//        view.iniciar();
+        view.iniciarJframe();
     }
 }

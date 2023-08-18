@@ -19,6 +19,9 @@ public class Paquete {
         this.producciones = new ArrayList<>();
     }
 
+    public Paquete() {
+    }
+
     // GETTERS
     public int getId() {
         return id;
