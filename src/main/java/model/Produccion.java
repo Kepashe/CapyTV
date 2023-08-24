@@ -24,18 +24,6 @@ public abstract class Produccion {
 
     }
 
-    //Métodos
-
-    public String getInfo(){
-        String inf = "" + nombre + "  $ " + calcularPrecio() + "\n";
-        return inf;
-    }
-
-    double calcularPrecio(){
-        double precio = duracion * precioPorHora;
-        return precio;
-    }
-
     //Getters y setters
 
     public int getId() {

@@ -15,6 +15,8 @@ public class Menu extends javax.swing.JFrame {
 
     @SuppressWarnings("unchecked")
     private void initComponents() {
+
+
         
         pnlPrincipal = new javax.swing.JPanel();
         lblImageLogo = new javax.swing.JLabel();
