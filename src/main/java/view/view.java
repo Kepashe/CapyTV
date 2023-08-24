@@ -1,13 +1,6 @@
 package view;
 
-import model.Paquete;
-import model.Pelicula;
-import controller.Plataforma;
-import model.Serie;
-import view.jframe.Menu;
-import view.jframe.VentanaPrincipal;
-
-import javax.swing.*;
+import view.jframe.Principal;
 
 public class view {
 //    public static void iniciar(){
@@ -103,10 +96,7 @@ public class view {
 //    }
 
     public static void iniciarJframe(){
-        Menu m = new Menu();
-        m.setTitle("MENU PATRONES - USO DEL JAR");
-        m.setSize(573,540);
-        m.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Principal m = new Principal();
         m.setVisible(true);
     }
 

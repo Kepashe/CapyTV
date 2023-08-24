@@ -164,7 +164,7 @@ public class selectPeliculas extends javax.swing.JFrame {
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         setVisible(false);
-        Menu m = new Menu();
+        Principal m = new Principal();
         m.setVisible(true);
     }
 
