@@ -28,28 +28,31 @@ public class Plataforma implements iPlataforma {
     @Override
     public String informe() {
 
-        String msgPeliculas = "";
-        String msgSeries = "";
-        String msgPaquetes = "";
-
-        for (Pelicula peli : peliculas) {
-            msgPeliculas += peli.getInfo();
-        }
-        for (Serie serie : series) {
-            msgSeries += serie.getInfo();
-        }
-        for (Paquete paquete : paquetes) {
-            msgPaquetes += paquete.getInfo();
-        }
-
-        String msg = "" +
-                " " +
-                "Catalogo: \n" +
-                " Películas: \n" + msgPeliculas +
-                "\n" +
-                " Series: \n" + msgSeries +
-                " \n" +
-                " Paquetes: \n" + msgPaquetes;
+//        String msgPeliculas = "";
+//        String msgSeries = "";
+//        String msgPaquetes = "";
+//
+//        for (Pelicula peli : peliculas) {
+//            msgPeliculas += peli.getInfo();
+//        }
+//        for (Serie serie : series) {
+//            msgSeries += serie.getInfo();
+//        }
+//        for (Paquete paquete : paquetes) {
+//            msgPaquetes += paquete.getInfo();
+//        }
+//
+//
+//
+//        String msg = "" +
+//                " " +
+//                "Catalogo: \n" +
+//                " Películas: \n" + msgPeliculas +
+//                "\n" +
+//                " Series: \n" + msgSeries +
+//                " \n" +
+//                " Paquetes: \n" + msgPaquetes;
+        String msg = "";
         return msg;
     }
 
