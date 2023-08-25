@@ -10,8 +10,7 @@ public class DataBaseConnection {
     private static String usuario = "System";
     private static String contra = "root";
 
-
-    static{
+    static {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
             System.out.println("Se encontró el Driver exitosamente");
@@ -20,7 +19,7 @@ public class DataBaseConnection {
             } catch (SQLException e) {
                 System.out.println("Error al conectarse a la Base de datos");
                 System.out.println(e.getErrorCode());
-                System.err.format("SQL state: %s \n %s",e.getSQLState(), e.getMessage());
+                System.err.format("SQL state: %s \n %s", e.getSQLState(), e.getMessage());
                 e.printStackTrace();
             }
         } catch (ClassNotFoundException cnfex) {
@@ -29,8 +28,7 @@ public class DataBaseConnection {
         }
     }
 
-    public static Connection getConnection(){
+    public static Connection getConnection() {
         return databaseConnection;
     }
-
 }

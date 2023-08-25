@@ -95,7 +95,7 @@ public class view {
 //
 //    }
 
-    public static void iniciarJframe(){
+    public static void iniciarJframe() {
         Principal m = new Principal();
         m.setVisible(true);
     }

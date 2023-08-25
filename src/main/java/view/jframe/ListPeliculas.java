@@ -1,67 +1,64 @@
 package view.jframe;
 
 
-import java.awt.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.SQLRecoverableException;
-import java.sql.Statement;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.sql.*;
 
 public class ListPeliculas extends JFrame {
     private Connection con;
-    public ListPeliculas(Connection con){
+
+    public ListPeliculas(Connection con) {
         this.con = con;
     }
 
-    public void mostrar(){
-        JFrame frame =new JFrame("Listado de películas");
+    public void mostrar() {
+        JFrame frame = new JFrame("Listado de películas");
 
-        DefaultTableModel modelo= new DefaultTableModel();
+        DefaultTableModel modelo = new DefaultTableModel();
 
 
         final JTable table = new JTable(modelo);
 
-        final String[] columnNames = {"ID","NOMBRE","DESCRIPCION","DURACION","PRECIOPORHORA"};
+        final String[] columnNames = {"ID", "NOMBRE", "DESCRIPCION", "DURACION", "PRECIOPORHORA"};
 
-        for(int column = 0; column < columnNames.length; column++){
+        for (int column = 0; column < columnNames.length; column++) {
             modelo.addColumn(columnNames[column]);
         }
 
-        Object [] fila = new Object[columnNames.length];
+        Object[] fila = new Object[columnNames.length];
 
 
-        String consulta="SELECT * FROM PELICULA";
+        String consulta = "SELECT * FROM PELICULA";
 
-        try{
+        try {
             Statement sentencia = con.createStatement();
             ResultSet peliculaRS = sentencia.executeQuery(consulta);
 
-            while(peliculaRS.next()) {
-                String result=peliculaRS.getString("ID");
-                fila[0]=result;
-                result=peliculaRS.getString("NOMBRE");
-                fila[1]=result;
-                result=peliculaRS.getString("DESCRIPCION");
-                fila[2]=result;
-                result=peliculaRS.getString("DURACION");
-                fila[3]=result;
-                result=peliculaRS.getString("PRECIOPORHORA");
-                fila[4]=result;
+            while (peliculaRS.next()) {
+                String result = peliculaRS.getString("ID");
+                fila[0] = result;
+                result = peliculaRS.getString("NOMBRE");
+                fila[1] = result;
+                result = peliculaRS.getString("DESCRIPCION");
+                fila[2] = result;
+                result = peliculaRS.getString("DURACION");
+                fila[3] = result;
+                result = peliculaRS.getString("PRECIOPORHORA");
+                fila[4] = result;
                 modelo.addRow(fila);
             }
 
 
-        }catch (SQLRecoverableException s) {
-            String res="Conexión esta cerrada -"+s.getMessage();
-            JOptionPane.showMessageDialog(null,res);
+        } catch (SQLRecoverableException s) {
+            String res = "Conexión esta cerrada -" + s.getMessage();
+            JOptionPane.showMessageDialog(null, res);
 
             return;
-        }catch (SQLException s){
-            String res="Error ejecutando la consulta "+consulta;
-            JOptionPane.showMessageDialog(null,res);
+        } catch (SQLException s) {
+            String res = "Error ejecutando la consulta " + consulta;
+            JOptionPane.showMessageDialog(null, res);
             s.printStackTrace();
             return;
         }

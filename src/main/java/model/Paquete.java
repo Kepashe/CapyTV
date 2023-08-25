@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Paquete {
 
@@ -12,7 +11,7 @@ public class Paquete {
     private double descuento;
 
     // CONSTRUCTOR
-    public Paquete(int id, String nombrePaquete, double descuento){
+    public Paquete(int id, String nombrePaquete, double descuento) {
         this.id = id;
         this.nombrePaquete = nombrePaquete;
         this.descuento = descuento;
@@ -57,6 +56,4 @@ public class Paquete {
     }
 
     // Métodos
-
-
 }

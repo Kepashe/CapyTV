@@ -6,11 +6,9 @@ package view.jframe;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.sql.*;
 
 /**
- *
  * @author ale
  */
 public class selectPeliculas extends javax.swing.JFrame {
@@ -39,70 +37,65 @@ public class selectPeliculas extends javax.swing.JFrame {
         pnlPeliculas.setBackground(new java.awt.Color(250, 149, 4));
 
         tblDatos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "ID", "Nombre", "Descripción", "Duración", "Precio/Hora"
-            }
+                new Object[][]{
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null}
+                },
+                new String[]{
+                        "ID", "Nombre", "Descripción", "Duración", "Precio/Hora"
+                }
         ));
         jScrollPane1.setViewportView(tblDatos);
 
 
+        DefaultTableModel modelo = new DefaultTableModel();
 
+        final String[] columnNames = {"ID", "NOMBRE", "DESCRIPCION", "DURACION", "PRECIOPORHORA"};
 
-
-        DefaultTableModel modelo= new DefaultTableModel();
-
-        final String[] columnNames = {"ID","NOMBRE","DESCRIPCION","DURACION","PRECIOPORHORA"};
-
-        for(int column = 0; column < columnNames.length; column++){
+        for (int column = 0; column < columnNames.length; column++) {
             modelo.addColumn(columnNames[column]);
         }
 
-        Object [] fila = new Object[columnNames.length];
+        Object[] fila = new Object[columnNames.length];
 
 
-        String consulta="SELECT * FROM PELICULA";
+        String consulta = "SELECT * FROM PELICULA";
 
-        try{
+        try {
             Statement sentencia = con.createStatement();
             ResultSet peliculaRS = sentencia.executeQuery(consulta);
 
-            while(peliculaRS.next()) {
-                String result=peliculaRS.getString("ID");
-                fila[0]=result;
-                result=peliculaRS.getString("NOMBRE");
-                fila[1]=result;
-                result=peliculaRS.getString("DESCRIPCION");
-                fila[2]=result;
-                result=peliculaRS.getString("DURACION");
-                fila[3]=result;
-                result=peliculaRS.getString("PRECIOPORHORA");
-                fila[4]=result;
+            while (peliculaRS.next()) {
+                String result = peliculaRS.getString("ID");
+                fila[0] = result;
+                result = peliculaRS.getString("NOMBRE");
+                fila[1] = result;
+                result = peliculaRS.getString("DESCRIPCION");
+                fila[2] = result;
+                result = peliculaRS.getString("DURACION");
+                fila[3] = result;
+                result = peliculaRS.getString("PRECIOPORHORA");
+                fila[4] = result;
                 modelo.addRow(fila);
             }
 
 
-        }catch (SQLRecoverableException s) {
-            String res="Conexión esta cerrada -"+s.getMessage();
-            JOptionPane.showMessageDialog(null,res);
+        } catch (SQLRecoverableException s) {
+            String res = "Conexión esta cerrada -" + s.getMessage();
+            JOptionPane.showMessageDialog(null, res);
 
             return;
-        }catch (SQLException s){
-            String res="Error ejecutando la consulta "+consulta;
-            JOptionPane.showMessageDialog(null,res);
+        } catch (SQLException s) {
+            String res = "Error ejecutando la consulta " + consulta;
+            JOptionPane.showMessageDialog(null, res);
             s.printStackTrace();
             return;
         }
 
 
         tblDatos.setModel(modelo);
-
-
 
 
         btnVolver.setBackground(new java.awt.Color(251, 175, 4));
@@ -121,42 +114,42 @@ public class selectPeliculas extends javax.swing.JFrame {
         javax.swing.GroupLayout pnlPeliculasLayout = new javax.swing.GroupLayout(pnlPeliculas);
         pnlPeliculas.setLayout(pnlPeliculasLayout);
         pnlPeliculasLayout.setHorizontalGroup(
-            pnlPeliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlPeliculasLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(pnlPeliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblListaPeliculas)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                pnlPeliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlPeliculasLayout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addGroup(pnlPeliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblListaPeliculas)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(32, Short.MAX_VALUE))
         );
         pnlPeliculasLayout.setVerticalGroup(
-            pnlPeliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPeliculasLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(lblListaPeliculas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
-                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                pnlPeliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPeliculasLayout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(lblListaPeliculas)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(63, 63, 63)
+                                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnlPeliculas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(pnlPeliculas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnlPeliculas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(pnlPeliculas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
         );
 
         pack();

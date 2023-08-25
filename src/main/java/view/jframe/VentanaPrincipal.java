@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 
-public class VentanaPrincipal extends JFrame{
+public class VentanaPrincipal extends JFrame {
     JMenuBar barra;
     JMenu menu_base;
     JMenu menu_opciones;
@@ -23,11 +23,11 @@ public class VentanaPrincipal extends JFrame{
 
     public void crearMenu() {
         barra = new JMenuBar();
-        menu_base=new JMenu("Base de Datos");
-        menu_opciones=new JMenu("Opciones");
-        menuItem_conectar= new JMenuItem("Conectarse a la BD");
-        menuItem_cerrar= new JMenuItem("Cerrar BD");
-        menuItem_listar= new JMenuItem("Listar Películas");
+        menu_base = new JMenu("Base de Datos");
+        menu_opciones = new JMenu("Opciones");
+        menuItem_conectar = new JMenuItem("Conectarse a la BD");
+        menuItem_cerrar = new JMenuItem("Cerrar BD");
+        menuItem_listar = new JMenuItem("Listar Películas");
         menu_base.add(menuItem_conectar);
         menu_base.add(menuItem_cerrar);
         menu_opciones.add(menuItem_listar);
@@ -37,30 +37,30 @@ public class VentanaPrincipal extends JFrame{
 
 
         // Eventos del sistema
-        menuItem_conectar.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent evt){
+        menuItem_conectar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
 
                 DataBaseConnection.getConnection();
                 connection = DataBaseConnection.getConnection();
             }
         });
 
-        menuItem_cerrar.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent evt){
+        menuItem_cerrar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
 
                 DataBaseConnection.getConnection();
             }
 
         });
 
-        menuItem_listar.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent evt){
+        menuItem_listar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
 
-                if (connection!=null) {
+                if (connection != null) {
                     ListPeliculas lista = new ListPeliculas(connection);
                     lista.mostrar();
                 } else {
-                    JOptionPane.showMessageDialog(null,"La conexion esta cerrada");
+                    JOptionPane.showMessageDialog(null, "La conexion esta cerrada");
                 }
 
             }

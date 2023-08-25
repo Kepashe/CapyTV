@@ -1,6 +1,6 @@
 package model;
 
-public class Serie extends Produccion{
+public class Serie extends Produccion {
 
     public Serie() {
     }
