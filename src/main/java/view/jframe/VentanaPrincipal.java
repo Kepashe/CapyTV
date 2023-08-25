@@ -40,15 +40,15 @@ public class VentanaPrincipal extends JFrame{
         menuItem_conectar.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
 
-                DataBaseConnection.abrirConexion();
-                connection = DataBaseConnection.abrirConexion();
+                DataBaseConnection.getConnection();
+                connection = DataBaseConnection.getConnection();
             }
         });
 
         menuItem_cerrar.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
 
-                DataBaseConnection.cerrarConexion();
+                DataBaseConnection.getConnection();
             }
 
         });
