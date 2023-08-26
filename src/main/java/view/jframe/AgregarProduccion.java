@@ -286,5 +286,6 @@ public class AgregarProduccion extends javax.swing.JFrame {
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecioPorHora;
+    private javax.swing.JTextField txtTipo;
     // End of variables declaration//GEN-END:variables
 }

@@ -24,6 +24,7 @@ public class ProduccionDAO {
             statement.setString(1, produccion.getNombre());
             statement.setDouble(2, produccion.getPrecioPorHora());
             statement.setDouble(3, produccion.getDuracion());
+            statement.setInt(4, produccion.getTipo());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -65,7 +66,8 @@ public class ProduccionDAO {
                 String descripcion = resultSet.getString("descripcion");
                 double precioPorHora = resultSet.getDouble("precioPorHora");
                 double duracion = resultSet.getDouble("duracion");
-                Pelicula pelicula = new Pelicula(id, nombre, descripcion, duracion, precioPorHora);
+                int tipo = resultSet.getInt("tipo");
+                Pelicula pelicula = new Pelicula(id, nombre, descripcion, duracion, precioPorHora, tipo);
                 peliculas.add(pelicula);
             }
             resultSet.close();
@@ -86,7 +88,9 @@ public class ProduccionDAO {
                 String descripcion = resultSet.getString("descripcion");
                 double precioPorHora = resultSet.getDouble("precioPorHora");
                 double duracion = resultSet.getDouble("duracion");
-                Serie serie = new Serie(id, nombre, descripcion, duracion, precioPorHora);
+                int tipo = resultSet.getInt("tipo");
+
+                Serie serie = new Serie(id, nombre, descripcion, duracion, precioPorHora, tipo);
                 series.add(serie);
             }
             resultSet.close();

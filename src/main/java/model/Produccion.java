@@ -8,16 +8,17 @@ public abstract class Produccion {
     private String descripcion;
     private double duracion;
     private double precioPorHora;
-
+    private int tipo;
 
     //Constructor
 
-    public Produccion(int id, String nombre, String descripcion, double duracion, double precioPorHora) {
+    public Produccion(int id, String nombre, String descripcion, double duracion, double precioPorHora, int tipo) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.duracion = duracion;
         this.precioPorHora = precioPorHora;
+        this.tipo = tipo;
     }
 
     public Produccion() {
@@ -66,4 +67,11 @@ public abstract class Produccion {
         this.precioPorHora = precioPorHora;
     }
 
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
 }
