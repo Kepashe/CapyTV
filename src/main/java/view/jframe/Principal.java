@@ -187,7 +187,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
+        setVisible(false);
+        AgregarProduccion ap = new AgregarProduccion();
+        ap.setVisible(true);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     /**

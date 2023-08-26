@@ -1,5 +1,6 @@
 package DAO;
 
+import DBConnection.DataBaseConnection;
 import model.Pelicula;
 import model.Produccion;
 import model.Serie;
@@ -11,14 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProduccionDAO {
-    private static final String INSERT_PRODUCCION = "INSERT INTO PRODUCCION (NOMBRE, PRECIOPORHORA, DURACION) VALUES (?, ?, ?)";
-    private static final String DELETE_PRODUCCION = "DELETE FROM PRODUCCION WHERE ID = ?";
-    private static final String UPDATE_PRODUCCION = "UPDATE PRODUCCION SET NOMBRE = ?, PRECIOPORHORA = ?, DURACION = ? WHERE ID = ?";
-    private static final String SELECT_PELICULAS = "SELECT * FROM PELICULA";
-    private static final String SELECT_SERIES = "SELECT * FROM SERIE";
+    private static final String INSERT_PRODUCCION = "INSERT INTO PRODUCCIONES (NOMBRE, PRECIOPORHORA, DURACION, TIPO) VALUES (?, ?, ?, ?)";
+    private static final String DELETE_PRODUCCION = "DELETE FROM PRODUCCIONES WHERE ID = ?";
+    private static final String UPDATE_PRODUCCION = "UPDATE PRODUCCIONES SET NOMBRE = ?, PRECIOPORHORA = ?, DURACION = ?, TIPO = ? WHERE ID = ?";
+    private static final String SELECT_PELICULAS = "SELECT * FROM PRODUCCIONES WHERE TIPO = 1";
+    private static final String SELECT_SERIES = "SELECT * FROM PRODUCCIONES WHERE TIPO = 2";
 
-    public void agregarProduccion(Produccion produccion, PreparedStatement statement) {
+    public void agregarProduccion(Produccion produccion) {
         try {
+            PreparedStatement statement = DataBaseConnection.getConnection().prepareStatement(INSERT_PRODUCCION);
             statement.setString(1, produccion.getNombre());
             statement.setDouble(2, produccion.getPrecioPorHora());
             statement.setDouble(3, produccion.getDuracion());
@@ -28,8 +30,9 @@ public class ProduccionDAO {
         }
     }
 
-    public void eliminarProduccion(int id, PreparedStatement statement) {
+    public void eliminarProduccion(int id) {
         try {
+            PreparedStatement statement = DataBaseConnection.getConnection().prepareStatement(DELETE_PRODUCCION);
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -37,21 +40,24 @@ public class ProduccionDAO {
         }
     }
 
-    public void modificarProduccion(Produccion produccion, PreparedStatement statement) {
+    public void modificarProduccion(Produccion produccion) {
         try {
+            PreparedStatement statement = DataBaseConnection.getConnection().prepareStatement(UPDATE_PRODUCCION);
             statement.setString(1, produccion.getNombre());
             statement.setDouble(2, produccion.getPrecioPorHora());
             statement.setDouble(3, produccion.getDuracion());
-            statement.setInt(4, produccion.getId());
+            statement.setInt(4, produccion.getTipo());
+            statement.setInt(5, produccion.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public List<Pelicula> leerPeliculas(PreparedStatement statement) {
+    public List<Pelicula> leerPeliculas() {
         List<Pelicula> peliculas = new ArrayList<>();
         try {
+            PreparedStatement statement = DataBaseConnection.getConnection().prepareStatement(SELECT_PELICULAS);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
@@ -69,9 +75,10 @@ public class ProduccionDAO {
         return peliculas; // Devuelve la lista de películas
     }
 
-    public List<Serie> leerSeries(PreparedStatement statement) {
+    public List<Serie> leerSeries() {
         List<Serie> series = new ArrayList<>();
         try {
+            PreparedStatement statement = DataBaseConnection.getConnection().prepareStatement(SELECT_SERIES);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");

@@ -30,7 +30,7 @@ public class ListPeliculas extends JFrame {
         Object[] fila = new Object[columnNames.length];
 
 
-        String consulta = "SELECT * FROM PELICULA";
+        String consulta = "SELECT * FROM PRODUCCIONES WHERE TIPO = 1";
 
         try {
             Statement sentencia = con.createStatement();
