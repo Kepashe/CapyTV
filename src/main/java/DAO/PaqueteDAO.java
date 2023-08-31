@@ -15,6 +15,8 @@ public class PaqueteDAO {
 
     //Constantes
     private static String CONSULTA_PAQUETES = "SELECT * FROM PAQUETE";
+    private static final String SELECT_PELICULAS = "SELECT * FROM PRODUCCIONES WHERE TIPO = 1";
+    private static final String SELECT_SERIES = "SELECT * FROM PRODUCCIONES WHERE TIPO = 2";
 
     //FinConstantes
     //CRUD
@@ -67,17 +69,31 @@ public class PaqueteDAO {
             statement1.setString(1, String.valueOf(paquete.getId()));
             ResultSet resultSet1 = statement1.executeQuery();
             while (resultSet1.next()) {
-                PreparedStatement statement2 = DataBaseConnection.getConnection().prepareStatement("SELECT * FROM PRODUCCIONES");
+                PreparedStatement statement2 = DataBaseConnection.getConnection().prepareStatement(SELECT_PELICULAS);
                 ResultSet resultSet2 = statement2.executeQuery();
-                Pelicula peli = new Pelicula();
-                peli.setId(Integer.parseInt(resultSet2.getString("ID")));
-                peli.setNombre(resultSet2.getString("NOMBRE"));
-                peli.setDescripcion(resultSet2.getString("DESCRIPCION"));
-                peli.setDuracion(Double.parseDouble(resultSet2.getString("DURACION")));
-                peli.setPrecioPorHora(Double.parseDouble(resultSet2.getString("PRECIOPORHORA")));
-                producciones.add(peli);
 
+                if (resultSet1.getString("ID_PRODUCCION") == String.valueOf(resultSet2.getString("ID"))) {
+                    Pelicula peli = new Pelicula();
+                    peli.setId(Integer.parseInt(resultSet2.getString("ID")));
+                    peli.setNombre(resultSet2.getString("NOMBRE"));
+                    peli.setDescripcion(resultSet2.getString("DESCRIPCION"));
+                    peli.setDuracion(Double.parseDouble(resultSet2.getString("DURACION")));
+                    peli.setPrecioPorHora(Double.parseDouble(resultSet2.getString("PRECIOPORHORA")));
+                    producciones.add(peli);
+                }
 
+                PreparedStatement statement3 = DataBaseConnection.getConnection().prepareStatement(SELECT_SERIES);
+                ResultSet resultSet3 = statement3.executeQuery();
+
+                if (resultSet1.getString("ID_PRODUCCION") == String.valueOf(resultSet2.getString("ID"))) {
+                    Serie serie = new Serie();
+                    serie.setId(Integer.parseInt(resultSet2.getString("ID")));
+                    serie.setNombre(resultSet2.getString("NOMBRE"));
+                    serie.setDescripcion(resultSet2.getString("DESCRIPCION"));
+                    serie.setDuracion(Double.parseDouble(resultSet2.getString("DURACION")));
+                    serie.setPrecioPorHora(Double.parseDouble(resultSet2.getString("PRECIOPORHORA")));
+                    producciones.add(serie);
+                }
                 paquete.setProducciones(producciones);
             }
         }
@@ -86,13 +102,12 @@ public class PaqueteDAO {
     }
 
     public static ArrayList<Produccion> listaPaquetes2(Paquete paquete) throws SQLException {
-
         ArrayList<Produccion> producciones = new ArrayList<>();
         PreparedStatement statement1 = DataBaseConnection.getConnection().prepareStatement("SELECT * FROM LISTA WHERE ID_PAQUETE = ?");
         statement1.setString(1, String.valueOf(paquete.getId()));
         ResultSet resultSet1 = statement1.executeQuery();
         while (resultSet1.next()) {
-            PreparedStatement statement2 = DataBaseConnection.getConnection().prepareStatement("SELECT * FROM PELICULAS");
+            PreparedStatement statement2 = DataBaseConnection.getConnection().prepareStatement(SELECT_PELICULAS;
             ResultSet resultSet2 = statement2.executeQuery();
 
             if (resultSet1.getString("ID_PRODUCCION") == String.valueOf(resultSet2.getString("ID"))) {
@@ -105,7 +120,7 @@ public class PaqueteDAO {
                 producciones.add(peli);
             }
 
-            PreparedStatement statement3 = DataBaseConnection.getConnection().prepareStatement("SELECT * FROM SERIE");
+            PreparedStatement statement3 = DataBaseConnection.getConnection().prepareStatement(SELECT_SERIES);
             ResultSet resultSet3 = statement3.executeQuery();
 
             if (resultSet1.getString("ID_PRODUCCION") == String.valueOf(resultSet2.getString("ID"))) {
