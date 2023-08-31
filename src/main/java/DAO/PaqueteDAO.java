@@ -67,31 +67,17 @@ public class PaqueteDAO {
             statement1.setString(1, String.valueOf(paquete.getId()));
             ResultSet resultSet1 = statement1.executeQuery();
             while (resultSet1.next()) {
-                PreparedStatement statement2 = DataBaseConnection.getConnection().prepareStatement("SELECT * FROM PELICULAS");
+                PreparedStatement statement2 = DataBaseConnection.getConnection().prepareStatement("SELECT * FROM PRODUCCIONES");
                 ResultSet resultSet2 = statement2.executeQuery();
+                Pelicula peli = new Pelicula();
+                peli.setId(Integer.parseInt(resultSet2.getString("ID")));
+                peli.setNombre(resultSet2.getString("NOMBRE"));
+                peli.setDescripcion(resultSet2.getString("DESCRIPCION"));
+                peli.setDuracion(Double.parseDouble(resultSet2.getString("DURACION")));
+                peli.setPrecioPorHora(Double.parseDouble(resultSet2.getString("PRECIOPORHORA")));
+                producciones.add(peli);
 
-                if (resultSet1.getString("ID_PRODUCCION") == String.valueOf(resultSet2.getString("ID"))) {
-                    Pelicula peli = new Pelicula();
-                    peli.setId(Integer.parseInt(resultSet2.getString("ID")));
-                    peli.setNombre(resultSet2.getString("NOMBRE"));
-                    peli.setDescripcion(resultSet2.getString("DESCRIPCION"));
-                    peli.setDuracion(Double.parseDouble(resultSet2.getString("DURACION")));
-                    peli.setPrecioPorHora(Double.parseDouble(resultSet2.getString("PRECIOPORHORA")));
-                    producciones.add(peli);
-                }
 
-                PreparedStatement statement3 = DataBaseConnection.getConnection().prepareStatement("SELECT * FROM SERIE");
-                ResultSet resultSet3 = statement3.executeQuery();
-
-                if (resultSet1.getString("ID_PRODUCCION") == String.valueOf(resultSet2.getString("ID"))) {
-                    Serie serie = new Serie();
-                    serie.setId(Integer.parseInt(resultSet2.getString("ID")));
-                    serie.setNombre(resultSet2.getString("NOMBRE"));
-                    serie.setDescripcion(resultSet2.getString("DESCRIPCION"));
-                    serie.setDuracion(Double.parseDouble(resultSet2.getString("DURACION")));
-                    serie.setPrecioPorHora(Double.parseDouble(resultSet2.getString("PRECIOPORHORA")));
-                    producciones.add(serie);
-                }
                 paquete.setProducciones(producciones);
             }
         }

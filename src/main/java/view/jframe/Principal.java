@@ -163,12 +163,14 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSeriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeriesActionPerformed
-        // TODO add your handling code here:
+        setVisible(false);
+        selectSeries p = new selectSeries(DataBaseConnection.getConnection());
+        p.setVisible(true);
     }//GEN-LAST:event_btnSeriesActionPerformed
 
     private void btnPeliculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPeliculasActionPerformed
         setVisible(false);
-        selectPeliculas p = new selectPeliculas(DataBaseConnection.getConnection());
+        selectPeliculas p = new selectPeliculas();
         p.setVisible(true);
     }//GEN-LAST:event_btnPeliculasActionPerformed
 

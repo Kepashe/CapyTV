@@ -55,7 +55,7 @@ public class ProduccionDAO {
         }
     }
 
-    public List<Pelicula> leerPeliculas() {
+    public static List<Pelicula> leerPeliculas() {
         List<Pelicula> peliculas = new ArrayList<>();
         try {
             PreparedStatement statement = DataBaseConnection.getConnection().prepareStatement(SELECT_PELICULAS);
@@ -77,7 +77,7 @@ public class ProduccionDAO {
         return peliculas; // Devuelve la lista de películas
     }
 
-    public List<Serie> leerSeries() {
+    public static List<Serie> leerSeries() {
         List<Serie> series = new ArrayList<>();
         try {
             PreparedStatement statement = DataBaseConnection.getConnection().prepareStatement(SELECT_SERIES);

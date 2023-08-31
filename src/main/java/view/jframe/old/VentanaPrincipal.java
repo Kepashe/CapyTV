@@ -1,4 +1,4 @@
-package view.jframe;
+package view.jframe.old;
 
 import DBConnection.DataBaseConnection;
 

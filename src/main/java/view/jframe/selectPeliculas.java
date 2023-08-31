@@ -4,6 +4,10 @@
  */
 package view.jframe;
 
+import DAO.ProduccionDAO;
+import DBConnection.DataBaseConnection;
+import model.Produccion;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
@@ -13,12 +17,41 @@ import java.sql.*;
  */
 public class selectPeliculas extends javax.swing.JFrame {
 
-
-    private final Connection con;
-
-    public selectPeliculas(Connection con) {
-        this.con = con;
+    public selectPeliculas() {
         initComponents();
+    }
+
+    public void mostrar() {
+
+        DefaultTableModel modelo = new DefaultTableModel();
+        final String[] columnNames = {"ID", "NOMBRE", "DESCRIPCION", "DURACION", "PRECIOPORHORA"};
+        for (int column = 0; column < columnNames.length; column++) {
+            modelo.addColumn(columnNames[column]);
+        }
+        Object[] fila = new Object[columnNames.length];
+        String consulta = "SELECT * FROM PELICULA";
+        try {
+            Statement sentencia = DataBaseConnection.getConnection().createStatement();
+            ResultSet peliculaRS = sentencia.executeQuery(consulta);
+
+            while (peliculaRS.next()) {
+                String result = peliculaRS.getString("ID");
+                fila[0] = result;
+                result = peliculaRS.getString("NOMBRE");
+                fila[1] = result;
+                result = peliculaRS.getString("DESCRIPCION");
+                fila[2] = result;
+                result = peliculaRS.getString("DURACION");
+                fila[3] = result;
+                result = peliculaRS.getString("PRECIOPORHORA");
+                fila[4] = result;
+                modelo.addRow(fila);
+            }
+        } catch (SQLException s) {
+            String res = "Error ejecutando la consulta " + consulta;
+            JOptionPane.showMessageDialog(null, res);
+            s.printStackTrace();
+        }
     }
 
 
@@ -38,64 +71,39 @@ public class selectPeliculas extends javax.swing.JFrame {
 
         tblDatos.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null},
-                        {null, null, null, null, null}
+
                 },
                 new String[]{
                         "ID", "Nombre", "Descripción", "Duración", "Precio/Hora"
                 }
         ));
-        jScrollPane1.setViewportView(tblDatos);
 
 
         DefaultTableModel modelo = new DefaultTableModel();
-
         final String[] columnNames = {"ID", "NOMBRE", "DESCRIPCION", "DURACION", "PRECIOPORHORA"};
-
         for (int column = 0; column < columnNames.length; column++) {
             modelo.addColumn(columnNames[column]);
         }
-
         Object[] fila = new Object[columnNames.length];
-
-
-        String consulta = "SELECT * FROM PELICULA";
-
-        try {
-            Statement sentencia = con.createStatement();
-            ResultSet peliculaRS = sentencia.executeQuery(consulta);
-
-            while (peliculaRS.next()) {
-                String result = peliculaRS.getString("ID");
-                fila[0] = result;
-                result = peliculaRS.getString("NOMBRE");
-                fila[1] = result;
-                result = peliculaRS.getString("DESCRIPCION");
-                fila[2] = result;
-                result = peliculaRS.getString("DURACION");
-                fila[3] = result;
-                result = peliculaRS.getString("PRECIOPORHORA");
-                fila[4] = result;
-                modelo.addRow(fila);
-            }
-
-
-        } catch (SQLRecoverableException s) {
-            String res = "Conexión esta cerrada -" + s.getMessage();
-            JOptionPane.showMessageDialog(null, res);
-
-            return;
-        } catch (SQLException s) {
-            String res = "Error ejecutando la consulta " + consulta;
-            JOptionPane.showMessageDialog(null, res);
-            s.printStackTrace();
-            return;
+        for (Produccion produccion : ProduccionDAO.leerPeliculas()) {
+            String result = String.valueOf(produccion.getId());
+            fila[0] = result;
+            result = produccion.getNombre();
+            fila[1] = result;
+            result = produccion.getDescripcion();
+            fila[2] = result;
+            result = String.valueOf(produccion.getDuracion());
+            fila[3] = result;
+            result = String.valueOf(produccion.getPrecioPorHora());
+            fila[4] = result;
+            modelo.addRow(fila);
         }
 
 
         tblDatos.setModel(modelo);
+
+
+        jScrollPane1.setViewportView(tblDatos);
 
 
         btnVolver.setBackground(new java.awt.Color(251, 175, 4));
@@ -121,7 +129,7 @@ public class selectPeliculas extends javax.swing.JFrame {
                                         .addComponent(lblListaPeliculas)
                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(32, Short.MAX_VALUE))
+                                .addContainerGap(44, Short.MAX_VALUE))
         );
         pnlPeliculasLayout.setVerticalGroup(
                 pnlPeliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,61 +140,29 @@ public class selectPeliculas extends javax.swing.JFrame {
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(63, 63, 63)
                                 .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(17, Short.MAX_VALUE))
+                                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(pnlPeliculas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap())
+                        .addComponent(pnlPeliculas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(pnlPeliculas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap())
+                        .addComponent(pnlPeliculas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {
         setVisible(false);
         Principal m = new Principal();
         m.setVisible(true);
     }
 
-//    public static void main(String args[]) {
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(selectPeliculas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(selectPeliculas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(selectPeliculas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(selectPeliculas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new selectPeliculas().setVisible(true);
-//            }
-//        });
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVolver;
