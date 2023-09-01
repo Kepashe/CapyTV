@@ -5,7 +5,9 @@
 package view.jframe;
 
 import DAO.PaqueteDAO;
+import DAO.ProduccionDAO;
 import model.Paquete;
+import model.Produccion;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -22,6 +24,31 @@ public class Paquetes extends javax.swing.JFrame {
      */
     public Paquetes() {
         initComponents();
+    }
+
+
+    private void listarPaquetes() {
+        DefaultTableModel modelo = new DefaultTableModel();
+        final String[] columnNames = {"ID", "NOMBRE", "PRODUCCIONES", "DESCUENTO", "PRECIO"};
+        for (int column = 0; column < columnNames.length; column++) {
+            modelo.addColumn(columnNames[column]);
+        }
+        Object[] fila = new Object[columnNames.length];
+        for (Paquete paquete : PaqueteDAO.consultaPaquetes()) {
+            String result = String.valueOf(paquete.getId());
+            fila[0] = result;
+            result = paquete.getNombrePaquete();
+            fila[1] = result;
+            ArrayList<Produccion> producciones = paquete.getProducciones();
+            fila[2] = producciones;
+            result = String.valueOf(paquete.getDescuento());
+            fila[3] = result;
+            result = String.valueOf(PaqueteDAO.calcularPrecio(paquete));
+            fila[4] = result;
+            modelo.addRow(fila);
+        }
+
+        tblTabla.setModel(modelo);
     }
 
     /**
@@ -65,6 +92,8 @@ public class Paquetes extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(tblTabla);
+
+        listarPaquetes();
 
         btnEliminar.setBackground(new java.awt.Color(153, 39, 50));
         btnEliminar.setFont(new java.awt.Font("Malgun Gothic", 1, 18)); // NOI18N
@@ -238,18 +267,6 @@ public class Paquetes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 
-    public DefaultTableModel setearModel() {
-        DefaultTableModel modelo = new DefaultTableModel();
-        tblTabla.setModel(modelo);
-        final String[] columnNames = {"ID", "Nombre", "Producciones", "Descuento", "Precio"};
-        modelo.setRowCount(0);
-        for (int column = 0; column < columnNames.length; column++) {
-            modelo.addColumn(columnNames[column]);
-        }
-        return modelo;
-    }
-
-
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -259,32 +276,12 @@ public class Paquetes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-
+            AgregarPaquete agregarPaquete = new AgregarPaquete();
+            setVisible(false);
+            agregarPaquete.setVisible(true);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        if (txtID.getText().equals("") && txtDescripcion.getText().equals("") && txtDuracion.getText().equals("") && txtNombre.getText().equals("") && txtPrecio.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Por favor ingrese valores para realizar la consulta");
-        } else {
-            try {
-                setearModel();
-                DefaultTableModel modelo = setearModel();
-                ArrayList<Paquete> paquetes = PaqueteDAO.consultaPaquetes();
-
-                for (Paquete paquete : paquetes) {
-                    Object[] fila = new Object[tblTabla.getModel().getColumnCount()];
-                    fila[0] = paquete.getId();
-                    fila[1] = paquete.getNombrePaquete();
-                    fila[2] = paquete.getProducciones();
-                    fila[3] = paquete.getDescuento();
-                    fila[4] = PaqueteDAO.calcularPrecio(paquete);
-                    modelo.addRow(fila);
-                }
-            } catch (SQLException sqle) {
-                sqle.printStackTrace();
-                JOptionPane.showMessageDialog(null, "SQL ERROR");
-            }
-        }
 
     }//GEN-LAST:event_btnConsultarActionPerformed
 
@@ -297,37 +294,6 @@ public class Paquetes extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Paquetes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Paquetes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Paquetes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Paquetes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Paquetes().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;

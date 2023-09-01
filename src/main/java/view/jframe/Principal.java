@@ -156,7 +156,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnSeriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeriesActionPerformed
         setVisible(false);
-        selectSeries p = new selectSeries(DataBaseConnection.getConnection());
+        selectSeries p = new selectSeries();
         p.setVisible(true);
     }//GEN-LAST:event_btnSeriesActionPerformed
 

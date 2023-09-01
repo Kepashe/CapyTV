@@ -7,7 +7,6 @@ package view.jframe;
 import DAO.ProduccionDAO;
 import model.Produccion;
 
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 
@@ -17,10 +16,34 @@ import java.sql.*;
 public class selectSeries extends javax.swing.JFrame {
 
 
-    public selectSeries(Connection con) {
+    public selectSeries() {
         initComponents();
     }
 
+
+    private void listar() {
+        DefaultTableModel modelo = new DefaultTableModel();
+        final String[] columnNames = {"ID", "NOMBRE", "DESCRIPCION", "DURACION", "PRECIOPORHORA"};
+        for (int column = 0; column < columnNames.length; column++) {
+            modelo.addColumn(columnNames[column]);
+        }
+        Object[] fila = new Object[columnNames.length];
+        for (Produccion produccion : ProduccionDAO.leerSeries()) {
+            String result = String.valueOf(produccion.getId());
+            fila[0] = result;
+            result = produccion.getNombre();
+            fila[1] = result;
+            result = produccion.getDescripcion();
+            fila[2] = result;
+            result = String.valueOf(produccion.getDuracion());
+            fila[3] = result;
+            result = String.valueOf(produccion.getPrecioPorHora());
+            fila[4] = result;
+            modelo.addRow(fila);
+        }
+
+        tblDatos.setModel(modelo);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -45,6 +68,9 @@ public class selectSeries extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(tblDatos);
+
+        listar();
+
 
         btnVolver.setBackground(new java.awt.Color(153, 39, 50));
         btnVolver.setFont(new java.awt.Font("Malgun Gothic", 1, 24)); // NOI18N

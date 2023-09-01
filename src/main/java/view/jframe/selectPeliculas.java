@@ -5,12 +5,9 @@
 package view.jframe;
 
 import DAO.ProduccionDAO;
-import DBConnection.DataBaseConnection;
 import model.Produccion;
 
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.sql.*;
 
 /**
  * @author ale
@@ -21,37 +18,28 @@ public class selectPeliculas extends javax.swing.JFrame {
         initComponents();
     }
 
-    public void mostrar() {
-
+    private void listar() {
         DefaultTableModel modelo = new DefaultTableModel();
         final String[] columnNames = {"ID", "NOMBRE", "DESCRIPCION", "DURACION", "PRECIOPORHORA"};
         for (int column = 0; column < columnNames.length; column++) {
             modelo.addColumn(columnNames[column]);
         }
         Object[] fila = new Object[columnNames.length];
-        String consulta = "SELECT * FROM PELICULA";
-        try {
-            Statement sentencia = DataBaseConnection.getConnection().createStatement();
-            ResultSet peliculaRS = sentencia.executeQuery(consulta);
-
-            while (peliculaRS.next()) {
-                String result = peliculaRS.getString("ID");
-                fila[0] = result;
-                result = peliculaRS.getString("NOMBRE");
-                fila[1] = result;
-                result = peliculaRS.getString("DESCRIPCION");
-                fila[2] = result;
-                result = peliculaRS.getString("DURACION");
-                fila[3] = result;
-                result = peliculaRS.getString("PRECIOPORHORA");
-                fila[4] = result;
-                modelo.addRow(fila);
-            }
-        } catch (SQLException s) {
-            String res = "Error ejecutando la consulta " + consulta;
-            JOptionPane.showMessageDialog(null, res);
-            s.printStackTrace();
+        for (Produccion produccion : ProduccionDAO.leerPeliculas()) {
+            String result = String.valueOf(produccion.getId());
+            fila[0] = result;
+            result = produccion.getNombre();
+            fila[1] = result;
+            result = produccion.getDescripcion();
+            fila[2] = result;
+            result = String.valueOf(produccion.getDuracion());
+            fila[3] = result;
+            result = String.valueOf(produccion.getPrecioPorHora());
+            fila[4] = result;
+            modelo.addRow(fila);
         }
+
+        tblDatos.setModel(modelo);
     }
 
 
@@ -78,6 +66,8 @@ public class selectPeliculas extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(tblDatos);
+
+        listar();
 
         btnVolver.setBackground(new java.awt.Color(153, 39, 50));
         btnVolver.setFont(new java.awt.Font("Malgun Gothic", 1, 24)); // NOI18N

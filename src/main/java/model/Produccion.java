@@ -1,6 +1,6 @@
 package model;
 
-public abstract class Produccion {
+public class Produccion {
 
     //Atributos
     private int id;
