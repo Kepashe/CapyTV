@@ -13,10 +13,9 @@ import model.Produccion;
 import oracle.jdbc.proxy.annotation.Pre;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +23,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  *
@@ -37,57 +37,16 @@ public class AgregarPaquete extends javax.swing.JFrame {
     public AgregarPaquete() {
         initComponents();
     }
+    JCheckBox checkBox = new JCheckBox();
 
-
-    // Clase para personalizar la representación de casillas de verificación en la tabla
-    static class CheckBoxRenderer extends DefaultTableCellRenderer {
-        private JCheckBox checkBox = new JCheckBox();
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            if (value instanceof Boolean) {
-                checkBox.setSelected((Boolean) value);
-            }
-            return checkBox;
+    public static boolean isSelected(int row, int column, JTable jTable) {
+        boolean boo = (boolean) jTable.getValueAt(row, 0);
+        if(boo != false){
+            return true;
         }
+        return false;
     }
 
-    // Clase para personalizar la edición de casillas de verificación en la tabla
-    static class CheckBoxEditor extends AbstractCellEditor implements TableCellEditor, ActionListener {
-        private JCheckBox checkBox = new JCheckBox();
-        private boolean value;
-
-        public CheckBoxEditor() {
-            checkBox.addActionListener(this);
-        }
-
-        @Override
-        public Object getCellEditorValue() {
-            return value;
-        }
-
-        @Override
-        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-            if (value instanceof Boolean) {
-                checkBox.setSelected((Boolean) value);
-                this.value = (Boolean) value;
-            }
-            return checkBox;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            value = checkBox.isSelected();
-            fireEditingStopped();
-        }
-    }
-    public void addCheckBox(int column, JTable table){
-        table.getColumnModel().getColumn(column).setCellRenderer(new CheckBoxRenderer());
-        table.getColumnModel().getColumn(column).setCellEditor(new CheckBoxEditor());
-    }
-    public boolean isSelected(int row, int column){
-       return tblDatos.getValueAt(row, column) != null;
-    }
 
     private void listar() {
         DefaultTableModel modelo = new DefaultTableModel();
@@ -111,7 +70,7 @@ public class AgregarPaquete extends javax.swing.JFrame {
             modelo.addRow(fila);
         }
         tblDatos.setModel(modelo);
-        addCheckBox(0, tblDatos);
+
     }
 
 
@@ -150,9 +109,21 @@ public class AgregarPaquete extends javax.swing.JFrame {
             new String [] {
                 "Agregar", "ID", "Nombre", "Descripción", "Duración", "Precio/Hora"
             }
-        ));
-        jScrollPane1.setViewportView(tblDatos);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
 
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tblDatos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDatosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblDatos);
         listar();
 
         btnAgregar.setText("Agregar");
@@ -168,6 +139,7 @@ public class AgregarPaquete extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
+
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -226,8 +198,9 @@ public class AgregarPaquete extends javax.swing.JFrame {
         paquete.setNombrePaquete(txtNombre.getText());
         paquete.setDescuento(Double.parseDouble(txtDescuento.getText()));
         PaqueteDAO.agregarPaquete(paquete);
+
         for (int i = 0; i < tblDatos.getRowCount(); i++) {
-            if(isSelected(i, 0)){
+            if(isSelected(i, 0, tblDatos)){
                 Pelicula pelicula = new Pelicula();
                 pelicula.setId(Integer.parseInt(tblDatos.getValueAt(i, 1).toString()));
                 pelicula.setNombre(tblDatos.getValueAt(i, 2).toString());
@@ -239,7 +212,10 @@ public class AgregarPaquete extends javax.swing.JFrame {
 //                PaqueteDAO.agregarLista(paquete.getId(), );
             }
         }
+
+
         PaqueteDAO.agregarLista(String.valueOf(paquete.getId()) , prod);
+        JOptionPane.showMessageDialog(null, "Paquete agregado con exito.");
 
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -248,6 +224,11 @@ public class AgregarPaquete extends javax.swing.JFrame {
         Paquetes paquetes = new Paquetes();
         paquetes.setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void tblDatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDatosMouseClicked
+
+    }//GEN-LAST:event_tblDatosMouseClicked
+
 
     /**
      * @param args the command line arguments

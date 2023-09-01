@@ -10,7 +10,9 @@ import model.Paquete;
 import model.Produccion;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -39,8 +41,8 @@ public class Paquetes extends javax.swing.JFrame {
             fila[0] = result;
             result = paquete.getNombrePaquete();
             fila[1] = result;
-            ArrayList<Produccion> producciones = paquete.getProducciones();
-            fila[2] = producciones;
+            result = "Producciones";
+            fila[2] = result;
             result = String.valueOf(paquete.getDescuento());
             fila[3] = result;
             result = String.valueOf(PaqueteDAO.calcularPrecio(paquete));
@@ -49,6 +51,21 @@ public class Paquetes extends javax.swing.JFrame {
         }
 
         tblTabla.setModel(modelo);
+        int rowHeight = 30; // Ajusta esto al valor deseado
+        tblTabla.setRowHeight(rowHeight);
+        setComboBox(tblTabla, tblTabla.getColumnModel().getColumn(2), PaqueteDAO.consultaPaquetesProducciones());
+    }
+
+
+    public void setComboBox(JTable jTable, TableColumn tableColumn, ArrayList<Produccion> producciones) {
+        JComboBox cbx = new JComboBox();
+        for (Produccion produccion : producciones) {
+            cbx.addItem(produccion.getNombre());
+            tableColumn.setCellEditor(new DefaultCellEditor(cbx));
+            DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+            renderer.setToolTipText("Producciones");
+            tableColumn.setCellRenderer(renderer);
+        }
     }
 
     /**
@@ -69,7 +86,7 @@ public class Paquetes extends javax.swing.JFrame {
         txtID = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         txtDescripcion = new javax.swing.JTextField();
-        txtDuracion = new javax.swing.JTextField();
+        txtDescuento = new javax.swing.JTextField();
         txtPrecio = new javax.swing.JTextField();
         lblID = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
@@ -149,7 +166,7 @@ public class Paquetes extends javax.swing.JFrame {
         lblDuracion.setFont(new java.awt.Font("Malgun Gothic", 1, 12)); // NOI18N
         lblDuracion.setForeground(new java.awt.Color(255, 255, 255));
         lblDuracion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDuracion.setText("Duración");
+        lblDuracion.setText("Descuento");
         lblDuracion.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         lblPrecio.setFont(new java.awt.Font("Malgun Gothic", 1, 12)); // NOI18N
@@ -199,7 +216,7 @@ public class Paquetes extends javax.swing.JFrame {
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
@@ -232,7 +249,7 @@ public class Paquetes extends javax.swing.JFrame {
                             .addComponent(lblDescripcion))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblDuracion))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -268,7 +285,12 @@ public class Paquetes extends javax.swing.JFrame {
 
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        if(PaqueteDAO.eliminar(Integer.parseInt(txtID.getText()))){
+            JOptionPane.showMessageDialog(null, "Paquete eliminado con exito");
+        }else{
+            JOptionPane.showMessageDialog(null, "Error al eliminar");
+        }
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -276,13 +298,13 @@ public class Paquetes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-            AgregarPaquete agregarPaquete = new AgregarPaquete();
-            setVisible(false);
-            agregarPaquete.setVisible(true);
+        AgregarPaquete agregarPaquete = new AgregarPaquete();
+        setVisible(false);
+        agregarPaquete.setVisible(true);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-
+        listarPaquetes();
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -310,7 +332,7 @@ public class Paquetes extends javax.swing.JFrame {
     private javax.swing.JLabel lblPrecio;
     private javax.swing.JTable tblTabla;
     private javax.swing.JTextField txtDescripcion;
-    private javax.swing.JTextField txtDuracion;
+    private javax.swing.JTextField txtDescuento;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecio;

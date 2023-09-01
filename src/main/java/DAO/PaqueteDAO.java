@@ -22,6 +22,8 @@ public class PaqueteDAO {
     //Constantes
     private static String CONSULTA_PAQUETES = "SELECT * FROM PAQUETE";
     private static String SELECT_PRODUCCIONES = "SELECT * FROM PRODUCCIONES";
+    private static String DELETE_PAQUETE = "DELETE FROM PAQUETE WHERE ID = ?";
+    private static String DELETE_PRODUCCION = "DELETE FROM PRODUCCIONES WHERE ID_PAQUETE = ?";
     private static final String SELECT_PELICULAS = "SELECT * FROM PRODUCCIONES WHERE TIPO = 1";
     private static final String SELECT_SERIES = "SELECT * FROM PRODUCCIONES WHERE TIPO = 2";
     private static String AGREGAR_PAQUETE = "INSERT INTO PAQUETE (ID, NOMBRE, DESCUENTO) VALUES (?, ?, ?)";
@@ -86,7 +88,6 @@ public class PaqueteDAO {
     }
 
     public static void agregarLista(String idPaquete, ArrayList<Produccion> producciones) {
-        ArrayList<Produccion> produccionsList = producciones;
         try {
             for (Produccion produccion : producciones) {
                 PreparedStatement statement = DataBaseConnection.getConnection().prepareStatement(AGREGAR_PAQUETE_LISTA);
@@ -142,6 +143,22 @@ public class PaqueteDAO {
             }
         }
         return producciones;
+    }
+
+    public static boolean eliminar(int id) {
+        try {
+            PreparedStatement statement = DataBaseConnection.getConnection().prepareStatement(DELETE_PAQUETE);
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            PreparedStatement statement2 = DataBaseConnection.getConnection().prepareStatement(DELETE_PRODUCCION);
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            return true;
+
+        }catch (SQLException sqle){
+            sqle.printStackTrace();
+            return false;
+        }
     }
     //FinMetodos
 }
