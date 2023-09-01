@@ -37,54 +37,59 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(250, 149, 4));
+        jPanel1.setBackground(new java.awt.Color(29, 28, 28));
 
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/capybashTV-logo.png"))); // NOI18N
 
-        btnSeries.setBackground(new java.awt.Color(251, 175, 4));
+        btnSeries.setBackground(new java.awt.Color(153, 39, 50));
         btnSeries.setFont(new java.awt.Font("Malgun Gothic", 1, 24)); // NOI18N
+        btnSeries.setForeground(new java.awt.Color(255, 255, 255));
         btnSeries.setText("Series");
-        btnSeries.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnSeries.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnSeries.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSeriesActionPerformed(evt);
             }
         });
 
-        btnPeliculas.setBackground(new java.awt.Color(251, 175, 4));
+        btnPeliculas.setBackground(new java.awt.Color(153, 39, 50));
         btnPeliculas.setFont(new java.awt.Font("Malgun Gothic", 1, 24)); // NOI18N
+        btnPeliculas.setForeground(new java.awt.Color(255, 255, 255));
         btnPeliculas.setText("Películas");
-        btnPeliculas.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnPeliculas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnPeliculas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPeliculasActionPerformed(evt);
             }
         });
 
-        btnPaquetes.setBackground(new java.awt.Color(251, 175, 4));
+        btnPaquetes.setBackground(new java.awt.Color(153, 39, 50));
         btnPaquetes.setFont(new java.awt.Font("Malgun Gothic", 1, 24)); // NOI18N
+        btnPaquetes.setForeground(new java.awt.Color(255, 255, 255));
         btnPaquetes.setText("Paquetes");
-        btnPaquetes.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnPaquetes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnPaquetes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPaquetesActionPerformed(evt);
             }
         });
 
-        btnSalir.setBackground(new java.awt.Color(251, 175, 4));
+        btnSalir.setBackground(new java.awt.Color(153, 39, 50));
         btnSalir.setFont(new java.awt.Font("Malgun Gothic", 1, 24)); // NOI18N
+        btnSalir.setForeground(new java.awt.Color(255, 255, 255));
         btnSalir.setText("Salir");
-        btnSalir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalirActionPerformed(evt);
             }
         });
 
-        btnAgregar.setBackground(new java.awt.Color(251, 175, 4));
+        btnAgregar.setBackground(new java.awt.Color(153, 39, 50));
         btnAgregar.setFont(new java.awt.Font("Malgun Gothic", 1, 24)); // NOI18N
+        btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregar.setText("Administrar");
-        btnAgregar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnAgregar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
@@ -110,18 +115,19 @@ public class Principal extends javax.swing.JFrame {
                                 .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(93, 93, 93))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblLogo)
-                        .addGap(135, 135, 135))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(189, 189, 189))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(136, 136, 136)
+                .addComponent(lblLogo)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSeries, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))

@@ -34,7 +34,7 @@ public class selectSeries extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pnlPeliculas.setBackground(new java.awt.Color(250, 149, 4));
+        pnlPeliculas.setBackground(new java.awt.Color(29, 28, 28));
 
         tblDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -44,35 +44,11 @@ public class selectSeries extends javax.swing.JFrame {
                 "ID", "Nombre", "Descripción", "Duración", "Precio/Hora"
             }
         ));
-
-
-
-        DefaultTableModel modelo = new DefaultTableModel();
-        final String[] columnNames = {"ID", "NOMBRE", "DESCRIPCION", "DURACION", "PRECIOPORHORA"};
-        for (int column = 0; column < columnNames.length; column++) {
-            modelo.addColumn(columnNames[column]);
-        }
-        Object[] fila = new Object[columnNames.length];
-        for (Produccion produccion : ProduccionDAO.leerSeries()) {
-            String result = String.valueOf(produccion.getId());
-            fila[0] = result;
-            result = produccion.getNombre();
-            fila[1] = result;
-            result = produccion.getDescripcion();
-            fila[2] = result;
-            result = String.valueOf(produccion.getDuracion());
-            fila[3] = result;
-            result = String.valueOf(produccion.getPrecioPorHora());
-            fila[4] = result;
-            modelo.addRow(fila);
-        }
-
-        tblDatos.setModel(modelo);
-
         jScrollPane1.setViewportView(tblDatos);
 
-        btnVolver.setBackground(new java.awt.Color(251, 175, 4));
+        btnVolver.setBackground(new java.awt.Color(153, 39, 50));
         btnVolver.setFont(new java.awt.Font("Malgun Gothic", 1, 24)); // NOI18N
+        btnVolver.setForeground(new java.awt.Color(255, 255, 255));
         btnVolver.setText("Volver");
         btnVolver.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
@@ -82,19 +58,24 @@ public class selectSeries extends javax.swing.JFrame {
         });
 
         lblListaSeries.setFont(new java.awt.Font("Malgun Gothic Semilight", 1, 24)); // NOI18N
-        lblListaSeries.setText("Lista de Series");
+        lblListaSeries.setForeground(new java.awt.Color(255, 255, 255));
+        lblListaSeries.setText("LISTA DE SERIES");
 
         javax.swing.GroupLayout pnlPeliculasLayout = new javax.swing.GroupLayout(pnlPeliculas);
         pnlPeliculas.setLayout(pnlPeliculasLayout);
         pnlPeliculasLayout.setHorizontalGroup(
             pnlPeliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPeliculasLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
                 .addGroup(pnlPeliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblListaSeries)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(44, Short.MAX_VALUE))
+                    .addGroup(pnlPeliculasLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(pnlPeliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlPeliculasLayout.createSequentialGroup()
+                        .addGap(192, 192, 192)
+                        .addComponent(lblListaSeries)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         pnlPeliculasLayout.setVerticalGroup(
             pnlPeliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,9 +83,9 @@ public class selectSeries extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addComponent(lblListaSeries)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
-                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnVolver)
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
