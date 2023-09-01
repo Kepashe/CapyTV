@@ -107,7 +107,7 @@ public class PaqueteDAO {
         statement1.setString(1, String.valueOf(paquete.getId()));
         ResultSet resultSet1 = statement1.executeQuery();
         while (resultSet1.next()) {
-            PreparedStatement statement2 = DataBaseConnection.getConnection().prepareStatement(SELECT_PELICULAS;
+            PreparedStatement statement2 = DataBaseConnection.getConnection().prepareStatement(SELECT_PELICULAS);
             ResultSet resultSet2 = statement2.executeQuery();
 
             if (resultSet1.getString("ID_PRODUCCION") == String.valueOf(resultSet2.getString("ID"))) {
