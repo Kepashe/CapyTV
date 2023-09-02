@@ -287,6 +287,7 @@ public class Paquetes extends javax.swing.JFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         if(PaqueteDAO.eliminar(Integer.parseInt(txtID.getText()))){
             JOptionPane.showMessageDialog(null, "Paquete eliminado con exito");
+            listarPaquetes();
         }else{
             JOptionPane.showMessageDialog(null, "Error al eliminar");
         }
@@ -294,7 +295,12 @@ public class Paquetes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        if(PaqueteDAO.editar(Integer.parseInt(txtID.getText()), txtNombre.getText(), txtDescuento.getText())){
+            JOptionPane.showMessageDialog(null, "Paquete modificado con exito");
+            listarPaquetes();
+        }else{
+            JOptionPane.showMessageDialog(null, "Error al modificar");
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed

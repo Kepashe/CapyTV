@@ -24,6 +24,7 @@ public class PaqueteDAO {
     private static String SELECT_PRODUCCIONES = "SELECT * FROM PRODUCCIONES";
     private static String DELETE_PAQUETE = "DELETE FROM PAQUETE WHERE ID = ?";
     private static String DELETE_PRODUCCION = "DELETE FROM PRODUCCIONES WHERE ID_PAQUETE = ?";
+    private static String EDIT_PAQUETE = "UPDATE PAQUETE SET NOMBRE = ?, DESCUENTO = ? WHERE ID = ?";
     private static final String SELECT_PELICULAS = "SELECT * FROM PRODUCCIONES WHERE TIPO = 1";
     private static final String SELECT_SERIES = "SELECT * FROM PRODUCCIONES WHERE TIPO = 2";
     private static String AGREGAR_PAQUETE = "INSERT INTO PAQUETE (ID, NOMBRE, DESCUENTO) VALUES (?, ?, ?)";
@@ -155,6 +156,20 @@ public class PaqueteDAO {
             statement.executeUpdate();
             return true;
 
+        }catch (SQLException sqle){
+            sqle.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean editar(int id, String nombre, String descuento) {
+        try{
+            PreparedStatement statement = DataBaseConnection.getConnection().prepareStatement(EDIT_PAQUETE);
+            statement.setString(1, nombre);
+            statement.setString(2, descuento);
+            statement.setInt(3, id);
+            statement.executeUpdate();
+            return true;
         }catch (SQLException sqle){
             sqle.printStackTrace();
             return false;
