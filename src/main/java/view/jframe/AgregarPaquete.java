@@ -13,9 +13,10 @@ import model.Produccion;
 import oracle.jdbc.proxy.annotation.Pre;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +24,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Vector;
 
 /**
  *
@@ -39,11 +39,59 @@ public class AgregarPaquete extends javax.swing.JFrame {
     }
     JCheckBox checkBox = new JCheckBox();
 
-    public static boolean isSelected(int row, int column, JTable jTable) {
-        boolean boo = (boolean) jTable.getValueAt(row, 0);
-        if(boo != false){
-            return true;
+    // Clase para personalizar la representación de casillas de verificación en la tabla
+    static class CheckBoxRenderer extends DefaultTableCellRenderer {
+        private JCheckBox checkBox = new JCheckBox();
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            if (value instanceof Boolean) {
+                checkBox.setSelected((Boolean) value);
+            }
+            return checkBox;
         }
+    }
+
+    // Clase para personalizar la edición de casillas de verificación en la tabla
+    static class CheckBoxEditor extends AbstractCellEditor implements TableCellEditor, ActionListener {
+        private JCheckBox checkBox = new JCheckBox();
+        private boolean value;
+
+        public CheckBoxEditor() {
+            checkBox.addActionListener(this);
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            return value;
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            if (value instanceof Boolean) {
+                checkBox.setSelected((Boolean) value);
+                this.value = (Boolean) value;
+            }
+            return checkBox;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            value = checkBox.isSelected();
+            fireEditingStopped();
+        }
+    }
+    public void addCheckBox(int column, JTable table){
+        table.getColumnModel().getColumn(column).setCellRenderer(new CheckBoxRenderer());
+        table.getColumnModel().getColumn(column).setCellEditor(new CheckBoxEditor());
+    }
+    public static boolean isSelected(int row, JTable jTable) {
+        Object value = jTable.getValueAt(row, 0);
+
+        if (value instanceof Boolean) {
+            return Boolean.TRUE.equals(value);
+        }
+
         return false;
     }
 
@@ -70,7 +118,7 @@ public class AgregarPaquete extends javax.swing.JFrame {
             modelo.addRow(fila);
         }
         tblDatos.setModel(modelo);
-
+        addCheckBox(0, tblDatos);
     }
 
 
@@ -93,8 +141,13 @@ public class AgregarPaquete extends javax.swing.JFrame {
         tblDatos = new javax.swing.JTable();
         btnAgregar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(29, 28, 28));
 
         txtID.setToolTipText("");
 
@@ -109,37 +162,39 @@ public class AgregarPaquete extends javax.swing.JFrame {
             new String [] {
                 "Agregar", "ID", "Nombre", "Descripción", "Duración", "Precio/Hora"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        tblDatos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblDatosMouseClicked(evt);
-            }
-        });
+        ));
         jScrollPane1.setViewportView(tblDatos);
+
         listar();
 
+        btnAgregar.setBackground(new java.awt.Color(153, 39, 50));
+        btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregar.setText("Agregar");
+        btnAgregar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
             }
         });
 
+        btnCancelar.setBackground(new java.awt.Color(153, 39, 50));
+        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("Cancelar");
+        btnCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("ID Paquete:");
+
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Nombre Paquete:");
+
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Descuento:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -152,29 +207,41 @@ public class AgregarPaquete extends javax.swing.JFrame {
                         .addComponent(btnCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAgregar))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNombre)
+                            .addComponent(txtID)
+                            .addComponent(txtDescuento))))
                 .addContainerGap(46, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAgregar)
                     .addComponent(btnCancelar))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -198,9 +265,8 @@ public class AgregarPaquete extends javax.swing.JFrame {
         paquete.setNombrePaquete(txtNombre.getText());
         paquete.setDescuento(Double.parseDouble(txtDescuento.getText()));
         PaqueteDAO.agregarPaquete(paquete);
-
         for (int i = 0; i < tblDatos.getRowCount(); i++) {
-            if(isSelected(i, 0, tblDatos)){
+            if(isSelected(i, tblDatos)){
                 Pelicula pelicula = new Pelicula();
                 pelicula.setId(Integer.parseInt(tblDatos.getValueAt(i, 1).toString()));
                 pelicula.setNombre(tblDatos.getValueAt(i, 2).toString());
@@ -208,12 +274,8 @@ public class AgregarPaquete extends javax.swing.JFrame {
                 pelicula.setDuracion(Double.parseDouble(tblDatos.getValueAt(i, 4).toString()));
                 pelicula.setPrecioPorHora(Double.parseDouble(tblDatos.getValueAt(i, 5).toString()));
                 prod.add(pelicula);
-//                tblDatos.getValueAt(i,)
-//                PaqueteDAO.agregarLista(paquete.getId(), );
             }
         }
-
-
         PaqueteDAO.agregarLista(String.valueOf(paquete.getId()) , prod);
         JOptionPane.showMessageDialog(null, "Paquete agregado con exito.");
 
@@ -225,11 +287,6 @@ public class AgregarPaquete extends javax.swing.JFrame {
         paquetes.setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void tblDatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDatosMouseClicked
-
-    }//GEN-LAST:event_tblDatosMouseClicked
-
-
     /**
      * @param args the command line arguments
      */
@@ -238,6 +295,9 @@ public class AgregarPaquete extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblDatos;

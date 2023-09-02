@@ -20,15 +20,15 @@ import java.util.ArrayList;
 public class PaqueteDAO {
 
     //Constantes
-    private static String CONSULTA_PAQUETES = "SELECT * FROM PAQUETE";
-    private static String SELECT_PRODUCCIONES = "SELECT * FROM PRODUCCIONES";
-    private static String DELETE_PAQUETE = "DELETE FROM PAQUETE WHERE ID = ?";
-    private static String DELETE_PRODUCCION = "DELETE FROM PRODUCCIONES WHERE ID_PAQUETE = ?";
-    private static String EDIT_PAQUETE = "UPDATE PAQUETE SET NOMBRE = ?, DESCUENTO = ? WHERE ID = ?";
+    private static final String CONSULTA_PAQUETES = "SELECT * FROM PAQUETE";
+    private static final String SELECT_PRODUCCIONES = "SELECT * FROM PRODUCCIONES";
+    private static final String DELETE_PAQUETE = "DELETE FROM PAQUETE WHERE ID = ?";
+    private static final String DELETE_PRODUCCION = "DELETE FROM LISTA WHERE ID_PAQUETE = ?";
+    private static final String EDIT_PAQUETE = "UPDATE PAQUETE SET NOMBRE = ?, DESCUENTO = ? WHERE ID = ?";
     private static final String SELECT_PELICULAS = "SELECT * FROM PRODUCCIONES WHERE TIPO = 1";
     private static final String SELECT_SERIES = "SELECT * FROM PRODUCCIONES WHERE TIPO = 2";
-    private static String AGREGAR_PAQUETE = "INSERT INTO PAQUETE (ID, NOMBRE, DESCUENTO) VALUES (?, ?, ?)";
-    private static String AGREGAR_PAQUETE_LISTA = "INSERT INTO LISTA (ID_PAQUETE, ID_PRODUCCION) VALUES (?, ?)";
+    private static final String AGREGAR_PAQUETE = "INSERT INTO PAQUETE (ID, NOMBRE, DESCUENTO) VALUES (?, ?, ?)";
+    private static final String AGREGAR_PAQUETE_LISTA = "INSERT INTO LISTA (ID_PAQUETE, ID_PRODUCCION) VALUES (?, ?)";
 
     //FinConstantes
     //CRUD
@@ -149,11 +149,11 @@ public class PaqueteDAO {
     public static boolean eliminar(int id) {
         try {
             PreparedStatement statement = DataBaseConnection.getConnection().prepareStatement(DELETE_PAQUETE);
-            statement.setInt(1, id);
+            statement.setString(1, String.valueOf(id));
             statement.executeUpdate();
             PreparedStatement statement2 = DataBaseConnection.getConnection().prepareStatement(DELETE_PRODUCCION);
-            statement.setInt(1, id);
-            statement.executeUpdate();
+            statement2.setString(1, String.valueOf(id));
+            statement2.executeUpdate();
             return true;
 
         }catch (SQLException sqle){
