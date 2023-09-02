@@ -71,7 +71,6 @@ public class selectSeries extends javax.swing.JFrame {
 
         listar();
 
-
         btnVolver.setBackground(new java.awt.Color(153, 39, 50));
         btnVolver.setFont(new java.awt.Font("Malgun Gothic", 1, 24)); // NOI18N
         btnVolver.setForeground(new java.awt.Color(255, 255, 255));
@@ -92,16 +91,15 @@ public class selectSeries extends javax.swing.JFrame {
         pnlPeliculasLayout.setHorizontalGroup(
             pnlPeliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPeliculasLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(pnlPeliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlPeliculasLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(pnlPeliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(pnlPeliculasLayout.createSequentialGroup()
-                        .addGap(192, 192, 192)
-                        .addComponent(lblListaSeries)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 847, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPeliculasLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblListaSeries)
+                .addGap(354, 354, 354))
         );
         pnlPeliculasLayout.setVerticalGroup(
             pnlPeliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,7 +117,9 @@ public class selectSeries extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlPeliculas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pnlPeliculas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

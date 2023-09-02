@@ -44,11 +44,12 @@ public class ProduccionDAO {
     public void modificarProduccion(Produccion produccion) {
         try {
             PreparedStatement statement = DataBaseConnection.getConnection().prepareStatement(UPDATE_PRODUCCION);
-            statement.setString(1, produccion.getNombre());
-            statement.setDouble(2, produccion.getPrecioPorHora());
-            statement.setDouble(3, produccion.getDuracion());
-            statement.setInt(4, produccion.getTipo());
-            statement.setInt(5, produccion.getId());
+            statement.setString(1, nombre);
+            statement.setString(2, descripcion);
+            statement.setDouble(3, precio);
+            statement.setDouble(4, duracion);
+            statement.setInt(5, tipo);
+            statement.setInt(6, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
