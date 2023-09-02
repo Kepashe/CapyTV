@@ -42,7 +42,7 @@ public class AgregarProduccion extends javax.swing.JFrame {
 
     private void listar() {
         DefaultTableModel modelo = new DefaultTableModel();
-        final String[] columnNames = {"ID", "NOMBRE", "DESCRIPCION", "DURACION", "PRECIOPORHORA"};
+        final String[] columnNames = {"ID", "NOMBRE", "DESCRIPCION", "DURACION", "PRECIOPORHORA", "PRECIO"};
         for (int column = 0; column < columnNames.length; column++) {
             modelo.addColumn(columnNames[column]);
         }
@@ -58,6 +58,8 @@ public class AgregarProduccion extends javax.swing.JFrame {
             fila[3] = result;
             result = String.valueOf(produccion.getPrecioPorHora());
             fila[4] = result;
+            result = String.valueOf(ProduccionDAO.calcularPrecio(produccion));
+            fila[5] = result;
             modelo.addRow(fila);
         }
         jTable1.setModel(modelo);
@@ -369,8 +371,7 @@ public class AgregarProduccion extends javax.swing.JFrame {
 
         ProduccionDAO produccionDAO = new ProduccionDAO();
         produccionDAO.agregarProduccion(produccion);
-
-//        refreshTable(); // Actualizar la tabla
+        listar();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
